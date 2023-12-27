@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 
 class SongHandler {
-  constructor(service, validator) {
+  constructor(service, validator, queryValidator) {
     this._service = service;
     this._validator = validator;
+    this._queryValidator = queryValidator;
 
     this.postSongHandler = this.postSongHandler.bind(this);
     this.getSongsHandler = this.getSongsHandler.bind(this);
@@ -33,8 +34,11 @@ class SongHandler {
     return response;
   }
 
-  async getSongsHandler() {
-    const songs = await this._service.getSongs();
+  async getSongsHandler(request) {
+    const { title = '', performer = '' } = request.query;
+    this._queryValidator.validateSongQuery({ title, performer });
+
+    const songs = await this._service.getSongs(title, performer);
     return {
       status: 'success',
       data: {

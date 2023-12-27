@@ -1,5 +1,5 @@
 const InvariantError = require('../../exceptions/InvariantError');
-const { SongPayloadSchema } = require('./schema');
+const { SongPayloadSchema, SongQuerySchema } = require('./schema');
 
 const SongValidator = {
   validateSongPayload: (payload) => {
@@ -10,4 +10,14 @@ const SongValidator = {
   },
 };
 
-module.exports = SongValidator;
+const QueryValidator = {
+  validateSongQuery: (query) => {
+    const validationResult = SongQuerySchema.validate(query);
+    if (validationResult.error) {
+      throw new InvariantError(validationResult.error.message);
+    }
+    return validationResult;
+  },
+};
+
+module.exports = { SongValidator, QueryValidator };
