@@ -1,17 +1,13 @@
 /* eslint-disable no-underscore-dangle */
+const autoBind = require('auto-bind');
+
 class PlaylistsHandler {
   constructor(playlistsService, songService, validator) {
     this._playlistsService = playlistsService;
     this._songService = songService;
     this._validator = validator;
 
-    this.postPlaylistHandler = this.postPlaylistHandler.bind(this);
-    this.getPlaylistsHandler = this.getPlaylistsHandler.bind(this);
-    this.getPlaylistByIdHandler = this.getPlaylistByIdHandler.bind(this);
-    this.deletePlaylistByIdHandler = this.deletePlaylistByIdHandler.bind(this);
-    this.postPlaylistSongHandler = this.postPlaylistSongHandler.bind(this);
-    this.deletePlaylistSongHandler = this.deletePlaylistSongHandler.bind(this);
-    this.getPlaylistActivitiesByIdHandler = this.getPlaylistActivitiesByIdHandler.bind(this);
+    autoBind(this);
   }
 
   async postPlaylistHandler(request, h) {

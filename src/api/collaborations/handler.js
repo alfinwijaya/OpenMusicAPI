@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const autoBind = require('auto-bind');
 
 class CollaborationsHandler {
   constructor(collaborationsService, playlistsService, usersService, validator) {
@@ -7,8 +8,7 @@ class CollaborationsHandler {
     this._usersService = usersService;
     this._validator = validator;
 
-    this.postCollaborationHandler = this.postCollaborationHandler.bind(this);
-    this.deleteCollaborationHandler = this.deleteCollaborationHandler.bind(this);
+    autoBind(this);
   }
 
   async postCollaborationHandler(request, h) {
